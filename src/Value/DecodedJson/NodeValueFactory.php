@@ -29,8 +29,8 @@ final class NodeValueFactory implements NodeValueFactoryInterface
         return match (true) {
             null === $data,
             is_scalar($data) => new NodeScalarValue($data, $path),
+            is_object($data) || (is_array($data) && !array_is_list($data)) => new NodeObjectValue((object)$data, $path, $this),
             is_array($data) => new NodeArrayValue($data, $path, $this),
-            is_object($data) => new NodeObjectValue($data, $path, $this),
             default => throw new Exception\InvalidNodeDataException($data, $path),
         };
     }
